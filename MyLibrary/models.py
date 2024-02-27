@@ -7,11 +7,6 @@ class Category(models.Model):
 
 class Language(models.Model):
     name = models.CharField(max_length=100)
-class Book(models.Model):
-    title = models.CharField(max_length=200)
-    author = models.CharField(max_length=200)
-    category = models.ForeignKey(Category, null=True, blank=True, on_delete=models.CASCADE)
-    language = models.ForeignKey(Language, null=True, blank=True, on_delete=models.CASCADE)
 
 class User(models.Model):
     USER_TYPES = (
@@ -23,3 +18,9 @@ class User(models.Model):
     user_type = models.CharField(max_length=20, choices=USER_TYPES)
 
 
+class Book(models.Model):
+    title = models.CharField(max_length=200)
+    author = models.CharField(max_length=200)
+    category = models.ForeignKey(Category, null=True, blank=True, on_delete=models.CASCADE)
+    language = models.ForeignKey(Language, null=True, blank=True, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, null=True, blank=True, on_delete=models.CASCADE)
