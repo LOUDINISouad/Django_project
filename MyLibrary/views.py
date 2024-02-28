@@ -31,12 +31,22 @@ def add_book(request):
         books = Book.objects.all()
         serializer = BookSerializer(books, many=True)
         return JsonResponse(serializer.data, safe=False)
+@csrf_exempt
+def get_book_by_id(request, id):
+    try:
+        book = Book.objects.get(id=id)
+    except Book.DoesNotExist:
+        return JsonResponse({'error': 'Book not found'}, status=404)
+    
+    if request.method == 'GET':
+        serializer = BookSerializer(book)
+        return JsonResponse(serializer.data)
     
 @csrf_exempt
 def delete(request, id):
     if request.method == "DELETE":
         book = Book(id=id)
         book.delete()
-        
+      
         
         
